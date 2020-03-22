@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/patient-payments",
+      "handler": "patient-payment.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/patient-payments/count",
+      "handler": "patient-payment.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/patient-payments/:id",
+      "handler": "patient-payment.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/patient-payments",
+      "handler": "patient-payment.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/patient-payments/:id",
+      "handler": "patient-payment.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/patient-payments/:id",
+      "handler": "patient-payment.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

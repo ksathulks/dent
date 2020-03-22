@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/clinic-payments",
+      "handler": "clinic-payment.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clinic-payments/count",
+      "handler": "clinic-payment.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clinic-payments/:id",
+      "handler": "clinic-payment.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/clinic-payments",
+      "handler": "clinic-payment.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/clinic-payments/:id",
+      "handler": "clinic-payment.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/clinic-payments/:id",
+      "handler": "clinic-payment.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

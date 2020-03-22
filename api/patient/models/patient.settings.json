@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "connection": "default",
+  "collectionName": "patients",
+  "info": {
+    "name": "Patient"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "address": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "integer",
+      "required": true
+    },
+    "date": {
+      "type": "date"
+    },
+    "treatmentPlan": {
+      "type": "integer",
+      "required": true
+    },
+    "treatmentStatus": {
+      "type": "boolean",
+      "required": true
+    },
+    "clinic": {
+      "type": "enumeration",
+      "enum": [
+        "clinic"
+      ],
+      "required": true
+    }
+  }
+}
