@@ -13,10 +13,10 @@
     "name": {
       "type": "string",
       "required": true,
-      "unique": true
+      "unique": false
     },
-    "address": {
-      "type": "string"
+    "address1": {
+      "type": "text"
     },
     "email": {
       "type": "email",
@@ -24,11 +24,7 @@
       "unique": true
     },
     "phone": {
-      "type": "integer",
-      "required": true
-    },
-    "doctorFees": {
-      "type": "integer",
+      "type": "biginteger",
       "required": true
     }
   }

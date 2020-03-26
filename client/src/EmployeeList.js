@@ -11,96 +11,96 @@ import Typography from '@material-ui/core/Typography';
 const styles = (theme => ({
 	root: {
 		maxWidth: 345,
-	  },
-	  media: {
-		height:200
-	  },
-  }));
+	},
+	media: {
+		height: 200
+	},
+}));
 
-class EmployeeList extends Component{
+class EmployeeList extends Component {
 
-    constructor(){
-				super();
-				this.state ={
-						empList: []
-				}
-				// DON'T DO AJAX CALLS HERE 
-				
-    }
+	constructor() {
+		super();
+		this.state = {
+			empList: []
+		}
+		// DON'T DO AJAX CALLS HERE 
 
-		componentWillMount(){
-			console.log("inside Component Will Mount");
+	}
+
+	componentWillMount() {
+		console.log("inside Component Will Mount");
+	}
+
+	componentDidMount() {
+		console.log("Inside Component Did Mount");
+		// send ajax calls  
+		axios.get('http://localhost:1337/profiles')  //INSTEAD OF THIS URL GIVE YOUR URL HERE
+			.then((response) => {
+				// handle success
+				console.log(response);
+				this.setState({
+					empList: response.data
+				});
+			})
+			.catch((error) => {
+				// handle error
+				console.log(error);
+			})
+			.finally(() => {
+				// always executed
+			});
+
+	}
+
+	render() {
+
+		let employees = null;
+		if (this.state.empList && this.state.empList.length > 0) {
+			employees = this.state.empList.map((employee) => { //FOLLOW THE JSON STRUCTURE OF THE UR JSON OBJECT
+				console.log(employee);
+				return (<Card className={this.props.classes.root}>
+
+					<CardActionArea>
+						{/* <CardMedia
+							className={this.props.classes.media}
+							component="img"
+							image={"http://localhost:1337" + employee.url}
+							title="Contemplative Reptile"
+						/> */}
+						<CardContent>
+							<Typography gutterBottom variant="h5" component="h2">
+								{employee.name}
+							</Typography>
+							<Typography variant="body2" color="textSecondary" component="p">
+								Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+								across all continents except Antarctica
+          </Typography>
+						</CardContent>
+					</CardActionArea>
+					<CardActions>
+						<Button size="small" color="primary">
+							Share
+        </Button>
+						<Button size="small" color="primary">
+							Learn More
+        </Button>
+					</CardActions>
+				</Card>)
+			})
 		}
 
-		componentDidMount(){
-			console.log("Inside Component Did Mount");
-			// send ajax calls  
-			axios.get('http://localhost:1337/profiles' && 'http://localhost:1337/upload/files')  //INSTEAD OF THIS URL GIVE YOUR URL HERE
-				.then( (response) => {
-					// handle success
-					console.log(response);
-					this.setState({
-						empList: response.data
-					});
-				})
-				.catch( (error) => {
-					// handle error
-					console.log(error);
-				})
-				.finally( () => {
-					// always executed
-                });
-                
-		}
+		return (
+			<div className="container text-left">
+				<div className="row mb-2">
 
-    render(){
-		
-			let employees = null; 
-			if(this.state.empList && this.state.empList.length > 0) {
-				employees = this.state.empList.map( (employee) =>{ //FOLLOW THE JSON STRUCTURE OF THE UR JSON OBJECT
-					console.log(employee);
-					return(<Card className={this.props.classes.root}>
-					
-						<CardActionArea>
-        <CardMedia
-		  className={this.props.classes.media}
-		  component="img" 
-          image= {"http://localhost:1337"+ employee.url}
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {employee.name}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
-					</Card>)
-				})
-			}
+					{employees}
 
-			return(
-				<div className="container text-left">
-					<div className="row mb-2">
-						
-						{employees}
-
-					</div>
 				</div>
-			)
-    }
+			</div>
+		)
+	}
 }
 
 
-export default withStyles(styles)( EmployeeList);
+export default withStyles(styles)(EmployeeList);
