@@ -37,6 +37,11 @@
     "balance": {
       "type": "biginteger",
       "min": "0"
+    },
+    "email": {
+      "type": "email",
+      "unique": false,
+      "required": true
     }
   }
 }

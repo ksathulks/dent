@@ -38,6 +38,9 @@
     },
     "patient_payments": {
       "collection": "patient-payments"
+    },
+    "doctors": {
+      "collection": "doctors"
     }
   }
 }

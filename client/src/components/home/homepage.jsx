@@ -29,7 +29,7 @@ function HomePage() {
             <MDBView>
               <img
                 className="d-block w-100"
-                src="https://mdbootstrap.com/img/Others/documentation/img%20(136)-mini.jpg"
+                src="https://mdbootstrap.com/img/Others/documentation/img%20(137)-mini.jpg"
                 alt="First slide"
               />
               <MDBMask overlay="black-light" />
@@ -42,17 +42,17 @@ function HomePage() {
                 src="https://mdbootstrap.com/img/Others/documentation/img%20(137)-mini.jpg"
                 alt="Second slide"
               />
-              <MDBMask overlay="black-strong" />
+              <MDBMask overlay="black-slight  " />
             </MDBView>
           </MDBCarouselItem>
           <MDBCarouselItem itemId="3">
             <MDBView>
               <img
                 className="d-block w-100"
-                src="https://mdbootstrap.com/img/Others/documentation/img%20(141)-mini.jpg"
+                src="https://mdbootstrap.com/img/Others/documentation/img%20(137)-mini.jpg"
                 alt="Third slide"
               />
-              <MDBMask overlay="black-slight" />
+              <MDBMask overlay="black-strong" />
             </MDBView>
           </MDBCarouselItem>
         </MDBCarouselInner>
