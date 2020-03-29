@@ -3,7 +3,7 @@
     {
       "method": "GET",
       "path": "/patient-payments",
-      "handler": "patient-payment.find",
+      "handler": "patient-payments.find",
       "config": {
         "policies": []
       }
@@ -11,7 +11,7 @@
     {
       "method": "GET",
       "path": "/patient-payments/count",
-      "handler": "patient-payment.count",
+      "handler": "patient-payments.count",
       "config": {
         "policies": []
       }
@@ -19,7 +19,7 @@
     {
       "method": "GET",
       "path": "/patient-payments/:id",
-      "handler": "patient-payment.findOne",
+      "handler": "patient-payments.findOne",
       "config": {
         "policies": []
       }
@@ -27,7 +27,7 @@
     {
       "method": "POST",
       "path": "/patient-payments",
-      "handler": "patient-payment.create",
+      "handler": "patient-payments.create",
       "config": {
         "policies": []
       }
@@ -35,7 +35,7 @@
     {
       "method": "PUT",
       "path": "/patient-payments/:id",
-      "handler": "patient-payment.update",
+      "handler": "patient-payments.update",
       "config": {
         "policies": []
       }
@@ -43,7 +43,7 @@
     {
       "method": "DELETE",
       "path": "/patient-payments/:id",
-      "handler": "patient-payment.delete",
+      "handler": "patient-payments.delete",
       "config": {
         "policies": []
       }

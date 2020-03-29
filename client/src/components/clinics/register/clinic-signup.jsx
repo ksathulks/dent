@@ -1,18 +1,19 @@
-import React, { Component } from "react";
+import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const ClinicLogin = () => {
-  const history = useHistory();
+function ClinicSignup() {
+  let history = useHistory();
   return (
     <Formik
       initialValues={{
         // name: '',
         email: "",
-        password: ""
-        //   confirmPassword: ""
+        password: "",
+        confirmPassword: ""
       }}
       validationSchema={Yup.object().shape({
         // name: Yup.string()
@@ -25,7 +26,10 @@ const ClinicLogin = () => {
           .min(6, "Password must be at least 6 characters")
           .max(16, "Password must be max 16 characters")
           // .matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*d)[a-zA-Zd]$")
-          .required("Password is required")
+          .required("Password is required"),
+        confirmPassword: Yup.string()
+          .oneOf([Yup.ref("password"), null], "Passwords must match")
+          .required("Confirm Password is required")
       })}
       // onSubmit={fields => {
       //     alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
@@ -33,51 +37,40 @@ const ClinicLogin = () => {
 
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          axios
-            .post("http://localhost:1337/auth/local", {
-              // username: values.email,
-              identifier: values.email,
-              password: values.password
-            })
-            .then(response => {
-              // Handle success.
-              console.log("Well done!");
-              console.log("User profile", response.data.user);
-              console.log("User token", response.data.jwt);
-              // this.setState({
-              //     regSuccess: true,
-              //     data: values
-              // });
-              // console.log(this.state)
-              // if(response.data.status)
-              if (response.status == 200) {
-                alert("login status: success");
-                console.log(response);
-                //   this.setState({
-                //     user: response.data
-                //   });
-                //   console.log("state profile", this.state.user.data.user);
-                //   console.log("state token", this.state.user.data.jwt);
-                //   this.render(<ClinicProfileContainer props={this.state} />);
-                //   this.props.history.push("/dent/clinics/profile");
-                sessionStorage.setItem("jwt", response.data.jwt);
-                sessionStorage.setItem(
-                  "user",
-                  JSON.stringify(response.data.user)
-                );
-                history.push("/dent/clinics/profile");
-              } else {
-                alert("sign-up failed, try again later");
-              }
-
-              // this.props.history.push("/dent/clinics/login");
-            })
-            .catch(error => {
-              // Handle error.
-              console.log("An error occurred:", error);
-              alert(JSON.parse(JSON.stringify(error)).message);
-            });
-
+          const affirm = window.confirm("Confirm?");
+          if (affirm) {
+            axios
+              .post("http://localhost:1337/auth/local/register", {
+                username: values.email,
+                email: values.email,
+                password: values.password
+              })
+              .then(response => {
+                // Handle success.
+                console.log("Well done!");
+                console.log("User profile", response.data.user);
+                console.log("kkkkkkkkkk", response);
+                console.log("User token", response.data.jwt);
+                // this.setState({
+                //     regSuccess: true,
+                //     data: values
+                // });
+                // console.log(this.state)
+                // if(response.data.status)
+                if (response.status == 200) {
+                  alert("sign-up status: SUCCESFULL");
+                  sessionStorage.setItem("jwt", response.data.jwt);
+                  //   history.push("/dent/clinics/login");
+                } else {
+                  alert("sign-up failed, try again later");
+                }
+              })
+              .catch(error => {
+                // Handle error.
+                console.log("An error occurred:", error);
+                alert(JSON.parse(JSON.stringify(error)).message);
+              });
+          }
           setSubmitting(false);
         }, 400);
       }}
@@ -124,13 +117,36 @@ const ClinicLogin = () => {
                       />
                     </div>
                     <div className="form-group">
+                      <label htmlFor="confirmPassword">Confirm Password</label>
+                      <Field
+                        name="confirmPassword"
+                        type="password"
+                        className={
+                          "form-control" +
+                          (errors.confirmPassword && touched.confirmPassword
+                            ? " is-invalid"
+                            : "")
+                        }
+                      />
+                      <ErrorMessage
+                        name="confirmPassword"
+                        component="div"
+                        className="invalid-feedback"
+                      />
+                    </div>
+                    <div className="form-group">
                       <button type="submit" className="btn btn-primary mr-2">
-                        Login
+                        Register
                       </button>
                       <button type="reset" className="btn btn-secondary">
                         Reset
                       </button>
                     </div>
+                    <span>already registered! click here to login</span>
+                    <Link to="/dent/clinics/login" className="btn btn-primary">
+                      login
+                      <i className="fas fa-sign-up ml-1"></i>
+                    </Link>
                   </Form>
                 </div>
               </div>
@@ -140,6 +156,6 @@ const ClinicLogin = () => {
       )}
     />
   );
-};
+}
 
-export default ClinicLogin;
+export default ClinicSignup;

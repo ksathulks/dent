@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "connection": "default",
+  "collectionName": "doctor_payments",
+  "info": {
+    "name": "doctorPayments"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "doctorTotalAmount": {
+      "type": "biginteger",
+      "default": "0",
+      "required": true,
+      "min": "0"
+    },
+    "doctorTotalPaid": {
+      "type": "biginteger",
+      "default": "0",
+      "required": true,
+      "min": "0"
+    },
+    "doctorEmail": {
+      "type": "email",
+      "required": true
+    },
+    "doctorName": {
+      "type": "string",
+      "required": true,
+      "minLength": 3
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    }
+  }
+}

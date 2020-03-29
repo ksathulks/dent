@@ -3,7 +3,7 @@
   "connection": "default",
   "collectionName": "clinics",
   "info": {
-    "name": "Clinic"
+    "name": "clinics"
   },
   "options": {
     "increments": true,
@@ -15,7 +15,7 @@
       "required": true,
       "unique": false
     },
-    "address1": {
+    "address": {
       "type": "text"
     },
     "email": {
@@ -26,6 +26,18 @@
     "phone": {
       "type": "biginteger",
       "required": true
+    },
+    "verificationStatus": {
+      "type": "boolean"
+    },
+    "patients": {
+      "collection": "patient"
+    },
+    "doctor_payments": {
+      "collection": "doctor-payments"
+    },
+    "patient_payments": {
+      "collection": "patient-payments"
     }
   }
 }

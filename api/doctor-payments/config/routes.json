@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/payments",
-      "handler": "payments.find",
+      "path": "/doctor-payments",
+      "handler": "doctor-payments.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/payments/count",
-      "handler": "payments.count",
+      "path": "/doctor-payments/count",
+      "handler": "doctor-payments.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/payments/:id",
-      "handler": "payments.findOne",
+      "path": "/doctor-payments/:id",
+      "handler": "doctor-payments.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/payments",
-      "handler": "payments.create",
+      "path": "/doctor-payments",
+      "handler": "doctor-payments.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/payments/:id",
-      "handler": "payments.update",
+      "path": "/doctor-payments/:id",
+      "handler": "doctor-payments.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/payments/:id",
-      "handler": "payments.delete",
+      "path": "/doctor-payments/:id",
+      "handler": "doctor-payments.delete",
       "config": {
         "policies": []
       }

@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "connection": "default",
+  "collectionName": "patient_payments",
+  "info": {
+    "name": "patientPayments"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "patientTotalAmount": {
+      "type": "biginteger",
+      "required": true,
+      "default": "0",
+      "min": "0"
+    },
+    "patientAmountPaid": {
+      "type": "biginteger",
+      "default": "0",
+      "required": true,
+      "min": "0"
+    },
+    "patientName": {
+      "type": "string",
+      "minLength": 3,
+      "required": true
+    },
+    "patientEmail": {
+      "type": "email",
+      "required": true
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    }
+  }
+}

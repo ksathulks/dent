@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "connection": "default",
+  "collectionName": "doctors",
+  "info": {
+    "name": "Doctors"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "minLength": 3
+    },
+    "phone": {
+      "type": "biginteger",
+      "required": true
+    },
+    "verificationStatus": {
+      "type": "boolean"
+    },
+    "email": {
+      "type": "email",
+      "required": true,
+      "unique": true
+    },
+    "clinics": {
+      "collection": "clinic"
+    }
+  }
+}

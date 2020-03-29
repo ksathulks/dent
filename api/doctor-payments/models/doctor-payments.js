@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Lifecycle callbacks for the `patient-payment` model.
+ * Lifecycle callbacks for the `doctor-payments` model.
  */
 
 module.exports = {

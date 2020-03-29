@@ -12,17 +12,19 @@
   "attributes": {
     "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "minLength": 3
     },
     "address": {
-      "type": "string"
+      "type": "text"
     },
     "phone": {
-      "type": "integer",
+      "type": "biginteger",
       "required": true
     },
-    "date": {
-      "type": "date"
+    "regDate": {
+      "type": "date",
+      "required": true
     },
     "treatmentPlan": {
       "type": "integer",
@@ -32,12 +34,9 @@
       "type": "boolean",
       "required": true
     },
-    "clinic": {
-      "type": "enumeration",
-      "enum": [
-        "clinic"
-      ],
-      "required": true
+    "balance": {
+      "type": "biginteger",
+      "min": "0"
     }
   }
 }

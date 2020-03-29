@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/profiles",
-      "handler": "profile.find",
+      "path": "/doctors",
+      "handler": "doctors.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/profiles/count",
-      "handler": "profile.count",
+      "path": "/doctors/count",
+      "handler": "doctors.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/profiles/:id",
-      "handler": "profile.findOne",
+      "path": "/doctors/:id",
+      "handler": "doctors.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/profiles",
-      "handler": "profile.create",
+      "path": "/doctors",
+      "handler": "doctors.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/profiles/:id",
-      "handler": "profile.update",
+      "path": "/doctors/:id",
+      "handler": "doctors.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/profiles/:id",
-      "handler": "profile.delete",
+      "path": "/doctors/:id",
+      "handler": "doctors.delete",
       "config": {
         "policies": []
       }
