@@ -1,161 +1,219 @@
 import React from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import axios from "axios";
-import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+import {
+  MDBNavbar,
+  MDBNavbarBrand,
+  MDBNavbarNav,
+  MDBNavItem,
+  MDBNavLink,
+  MDBNavbarToggler,
+  MDBCollapse,
+  MDBMask,
+  MDBRow,
+  MDBCol,
+  MDBIcon,
+  MDBBtn,
+  MDBView,
+  MDBContainer,
+  MDBCard,
+  MDBCardBody,
+  MDBInput,
+  MDBFormInline,
+  MDBAnimation
+} from "mdbreact";
+import "./clinic-signup.css";
+import _ClinicSignup from "./_clinic-signup";
+import ClinicLogin from "../login/clinic-login";
 
-function ClinicSignup() {
-  let history = useHistory();
-  return (
-    <Formik
-      initialValues={{
-        // name: '',
-        email: "",
-        password: "",
-        confirmPassword: ""
-      }}
-      validationSchema={Yup.object().shape({
-        // name: Yup.string()
-        //     .required('Name is required'),
+class ClassicFormPage extends React.Component {
+  state = {
+    collapseID: "",
+    login: false
+  };
 
-        email: Yup.string()
-          .email("Email is invalid")
-          .required("Email is required"),
-        password: Yup.string()
-          .min(6, "Password must be at least 6 characters")
-          .max(16, "Password must be max 16 characters")
-          // .matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*d)[a-zA-Zd]$")
-          .required("Password is required"),
-        confirmPassword: Yup.string()
-          .oneOf([Yup.ref("password"), null], "Passwords must match")
-          .required("Confirm Password is required")
-      })}
-      // onSubmit={fields => {
-      //     alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
-      // }}
+  toggleCollapse = collapseID => () =>
+    this.setState(prevState => ({
+      ...prevState,
+      collapseID: prevState.collapseID !== collapseID ? collapseID : ""
+    }));
 
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          const affirm = window.confirm("Confirm?");
-          if (affirm) {
-            axios
-              .post("http://localhost:1337/auth/local/register", {
-                username: values.email,
-                email: values.email,
-                password: values.password
-              })
-              .then(response => {
-                // Handle success.
-                console.log("Well done!");
-                console.log("User profile", response.data.user);
-                console.log("kkkkkkkkkk", response);
-                console.log("User token", response.data.jwt);
-                // this.setState({
-                //     regSuccess: true,
-                //     data: values
-                // });
-                // console.log(this.state)
-                // if(response.data.status)
-                if (response.status == 200) {
-                  alert("sign-up status: SUCCESFULL");
-                  sessionStorage.setItem("jwt", response.data.jwt);
-                  //   history.push("/dent/clinics/login");
-                } else {
-                  alert("sign-up failed, try again later");
-                }
-              })
-              .catch(error => {
-                // Handle error.
-                console.log("An error occurred:", error);
-                alert(JSON.parse(JSON.stringify(error)).message);
-              });
-          }
-          setSubmitting(false);
-        }, 400);
-      }}
-      render={({ errors, status, touched }) => (
-        <div className="jumbotron">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-6 offset-md-3">
-                <h3>Sign up</h3>
-                <div>
-                  <Form>
-                    <div className="form-group">
-                      <label htmlFor="email">Email</label>
-                      <Field
-                        name="email"
-                        type="email"
-                        className={
-                          "form-control" +
-                          (errors.email && touched.email ? " is-invalid" : "")
-                        }
-                      />
-                      <ErrorMessage
-                        name="email"
-                        component="div"
-                        className="invalid-feedback"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="password">Password</label>
-                      <Field
-                        name="password"
-                        type="password"
-                        className={
-                          "form-control" +
-                          (errors.password && touched.password
-                            ? " is-invalid"
-                            : "")
-                        }
-                      />
-                      <ErrorMessage
-                        name="password"
-                        component="div"
-                        className="invalid-feedback"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="confirmPassword">Confirm Password</label>
-                      <Field
-                        name="confirmPassword"
-                        type="password"
-                        className={
-                          "form-control" +
-                          (errors.confirmPassword && touched.confirmPassword
-                            ? " is-invalid"
-                            : "")
-                        }
-                      />
-                      <ErrorMessage
-                        name="confirmPassword"
-                        component="div"
-                        className="invalid-feedback"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <button type="submit" className="btn btn-primary mr-2">
-                        Register
-                      </button>
-                      <button type="reset" className="btn btn-secondary">
-                        Reset
-                      </button>
-                    </div>
-                    <span>already registered! click here to login</span>
-                    <Link to="/dent/clinics/login" className="btn btn-primary">
-                      login
-                      <i className="fas fa-sign-up ml-1"></i>
-                    </Link>
-                  </Form>
-                </div>
-              </div>
-            </div>
+  componentDidMount() {
+    document.querySelector("nav").style.height = "65px";
+  }
+
+  componentWillUnmount() {
+    document.querySelector("nav").style.height = "auto";
+  }
+
+  toggleLoginOrSignup = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      login: !this.state.login
+    }));
+  };
+
+  render() {
+    const { collapseID } = this.state;
+    const overlay = (
+      <div
+        id="sidenav-overlay"
+        style={{ backgroundColor: "transparent" }}
+        onClick={this.toggleCollapse("navbarCollapse")}
+      />
+    );
+    return (
+      <div id="classicformpage">
+        <Router>
+          <div>
+            <MDBNavbar
+              dark
+              expand="md"
+              scrolling
+              fixed="top"
+              style={{ marginTop: "0%" }}
+            >
+              <MDBContainer>
+                <MDBNavbarBrand>
+                  <strong className="white-text">MDB</strong>
+                </MDBNavbarBrand>
+                <MDBNavbarToggler
+                  onClick={this.toggleCollapse("navbarCollapse")}
+                />
+                <MDBCollapse id="navbarCollapse" isOpen={collapseID} navbar>
+                  <MDBNavbarNav left>
+                    <MDBNavItem active>
+                      <MDBNavLink to="#!">Home</MDBNavLink>
+                    </MDBNavItem>
+                    <MDBNavItem>
+                      <MDBNavLink to="#!">Link</MDBNavLink>
+                    </MDBNavItem>
+                    <MDBNavItem>
+                      <MDBNavLink to="#!">Profile</MDBNavLink>
+                    </MDBNavItem>
+                  </MDBNavbarNav>
+                  <MDBNavbarNav right>
+                    <MDBNavItem>
+                      <MDBFormInline waves>
+                        <div className="md-form my-0">
+                          <input
+                            className="form-control mr-sm-2"
+                            type="text"
+                            placeholder="Search"
+                            aria-label="Search"
+                          />
+                        </div>
+                      </MDBFormInline>
+                    </MDBNavItem>
+                  </MDBNavbarNav>
+                </MDBCollapse>
+              </MDBContainer>
+            </MDBNavbar>
+            {collapseID && overlay}
           </div>
-        </div>
-      )}
-    />
-  );
+        </Router>
+
+        <MDBView>
+          <MDBMask className="d-flex justify-content-center align-items-center gradient" />
+          <MDBContainer
+            style={{ height: "100%", width: "100%", paddingTop: "10rem" }}
+            className="mt-5  d-flex justify-content-center align-items-center"
+          >
+            <MDBRow>
+              <MDBAnimation
+                type="fadeInLeft"
+                delay=".3s"
+                className="white-text text-center text-md-left col-md-6 mt-xl-5 mb-5"
+              >
+                {!this.state.login && (
+                  <h1 className="h1-responsive font-weight-bold">
+                    Sign up right now!
+                  </h1>
+                )}
+                {this.state.login && (
+                  <h1 className="h1-responsive font-weight-bold">
+                    Login right now!
+                  </h1>
+                )}
+                <hr className="hr-light" />
+                <h6 className="mb-4">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem
+                  repellendus quasi fuga nesciunt dolorum nulla magnam veniam
+                  sapiente, fugiat! Commodi sequi non animi ea dolor molestiae,
+                  quisquam iste, maiores. Nulla.
+                </h6>
+                <MDBBtn outline color="white">
+                  Learn More
+                </MDBBtn>
+              </MDBAnimation>
+
+              <MDBCol md="6" xl="5" className="mb-4">
+                <MDBAnimation type="fadeInRight" delay=".3s">
+                  <MDBCard id="classic-card">
+                    <MDBCardBody id="xxx">
+                      {!this.state.login && (
+                        <h3 className="text-center">
+                          <MDBIcon icon="user" /> Register:
+                        </h3>
+                      )}
+                      {this.state.login && (
+                        <h3 className="text-center">
+                          <MDBIcon icon="user" /> Login:
+                        </h3>
+                      )}
+
+                      <hr className="hr-light" />
+                      {!this.state.login && (
+                        <_ClinicSignup
+                          toggleLoginOrSignup={this.toggleLoginOrSignup}
+                        />
+                      )}
+                      {this.state.login && (
+                        <ClinicLogin
+                          toggleLoginOrSignup={this.toggleLoginOrSignup}
+                        />
+                      )}
+                      <hr className="hr-light" />
+                      <div className="text-center d-flex justify-content-center white-label">
+                        <a href="#!" className="p-2 m-2">
+                          <MDBIcon fab icon="twitter" className="white-text" />
+                        </a>
+                        <a href="#!" className="p-2 m-2">
+                          <MDBIcon fab icon="linkedin" className="white-text" />
+                        </a>
+                        <a href="#!" className="p-2 m-2">
+                          <MDBIcon
+                            fab
+                            icon="instagram"
+                            className="white-text"
+                          />
+                        </a>
+                      </div>
+                    </MDBCardBody>
+                  </MDBCard>
+                </MDBAnimation>
+              </MDBCol>
+            </MDBRow>
+          </MDBContainer>
+        </MDBView>
+
+        <MDBContainer>
+          <MDBRow className="py-5">
+            <MDBCol md="12" className="text-center">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
+            </MDBCol>
+          </MDBRow>
+        </MDBContainer>
+      </div>
+    );
+  }
 }
 
-export default ClinicSignup;
+export default ClassicFormPage;

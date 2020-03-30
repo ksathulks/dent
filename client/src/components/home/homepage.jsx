@@ -1,567 +1,167 @@
 import React from "react";
-import Nav from "../shared/nav/nav";
-import { Router, Route, Link } from "react-router-dom";
-// import './homepage.css';
-// import { WOW } from 'wowjs/dist/wow';
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import {
-  MDBCarousel,
-  MDBCarouselInner,
-  MDBCarouselItem,
-  MDBView,
+  MDBNavbar,
+  MDBNavbarBrand,
+  MDBNavbarNav,
+  MDBNavItem,
+  MDBNavLink,
+  MDBNavbarToggler,
+  MDBCollapse,
   MDBMask,
-  MDBContainer
+  MDBRow,
+  MDBCol,
+  MDBBtn,
+  MDBView,
+  MDBContainer,
+  MDBFormInline,
+  MDBAnimation
 } from "mdbreact";
+import "./homepage.css";
 
-function HomePage() {
-  // new WOW().init();
-  return (
-    <div>
-      <Nav />
-      <MDBCarousel
-        activeItem={1}
-        length={3}
-        showControls={true}
-        showIndicators={true}
-        className="z-depth-1"
-      >
-        <MDBCarouselInner>
-          <MDBCarouselItem itemId="1">
-            <MDBView>
-              <img
-                className="d-block w-100"
-                src="https://mdbootstrap.com/img/Others/documentation/img%20(137)-mini.jpg"
-                alt="First slide"
-              />
-              <MDBMask overlay="black-light" />
-            </MDBView>
-          </MDBCarouselItem>
-          <MDBCarouselItem itemId="2">
-            <MDBView>
-              <img
-                className="d-block w-100"
-                src="https://mdbootstrap.com/img/Others/documentation/img%20(137)-mini.jpg"
-                alt="Second slide"
-              />
-              <MDBMask overlay="black-slight  " />
-            </MDBView>
-          </MDBCarouselItem>
-          <MDBCarouselItem itemId="3">
-            <MDBView>
-              <img
-                className="d-block w-100"
-                src="https://mdbootstrap.com/img/Others/documentation/img%20(137)-mini.jpg"
-                alt="Third slide"
-              />
-              <MDBMask overlay="black-strong" />
-            </MDBView>
-          </MDBCarouselItem>
-        </MDBCarouselInner>
-      </MDBCarousel>
+class AppPage extends React.Component {
+  state = {
+    collapsed: false
+  };
 
-      {/* <!--Main layout--> */}
-      <main>
-        <div className="container">
-          {/* <!--Section: Main info--> */}
-          <section className="mt-5 wow fadeIn">
-            {/* <!--Grid row--> */}
-            <div className="row">
-              {/* <!--Grid column--> */}
-              <div className="col-md-6 mb-4">
-                <img
-                  src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-main.jpg"
-                  className="img-fluid z-depth-1-half"
-                  alt=""
-                />
-              </div>
-              {/* <!--Grid column--> */}
+  handleTogglerClick = () => {
+    const { collapsed } = this.state;
+    this.setState({
+      collapsed: !collapsed
+    });
+  };
 
-              {/* <!--Grid column--> */}
-              <div className="col-md-6 mb-4">
-                {/* <!-- Main heading --> */}
-                <h3 className="h3 mb-3">Material Design for Bootstrap</h3>
-                <p>
-                  This template is created with Material Design for Bootstrap (
-                  <strong>MDB</strong> ) framework.
-                </p>
-                <p>Read details below to learn more about MDB.</p>
-                {/* <!-- Main heading --> */}
+  componentDidMount() {
+    document.querySelector("nav").style.height = "65px";
+  }
 
-                <hr />
+  componentWillUnmount() {
+    document.querySelector("nav").style.height = "auto";
+  }
 
-                <p>
-                  <strong>400+</strong> material UI elements,
-                  <strong>600+</strong> material icons,
-                  <strong>74</strong> CSS animations, SASS files, templates,
-                  tutorials and many more.
-                  <strong>Free for personal and commercial use.</strong>
-                </p>
+  render() {
+    const { collapsed } = this.state;
 
-                {/* <!-- CTA --> */}
-                <Link to="/dent/clinics/signup" className="btn btn-primary">
-                  Clinic Sign-up
-                  <i className="fas fa-sign-up ml-1"></i>
-                </Link>
-                <Link to="/dent/doctors/signup" className="btn btn-primary">
-                  Doctor Sign-up
-                  <i className="fas fa-sign-up ml-1"></i>
-                </Link>
-              </div>
-              {/* <!--Grid column--> */}
-            </div>
-            {/* <!--Grid row--> */}
-          </section>
-          {/* <!--Section: Main info--> */}
+    const overlay = (
+      <div
+        id="sidenav-overlay"
+        style={{ backgroundColor: "transparent" }}
+        onClick={this.handleTogglerClick}
+      />
+    );
+    return (
+      <div id="apppage">
+        <Router>
+          <div>
+            <MDBNavbar
+              color="primary-color"
+              dark
+              expand="md"
+              fixed="top"
+              scrolling
+              transparent
+              style={{ marginTop: "0%" }}
+            >
+              <MDBContainer>
+                <MDBNavbarBrand>
+                  <strong className="white-text">MDB</strong>
+                </MDBNavbarBrand>
+                <MDBNavbarToggler onClick={this.handleTogglerClick} />
+                <MDBCollapse isOpen={collapsed} navbar>
+                  <MDBNavbarNav left>
+                    <MDBNavItem active>
+                      <MDBNavLink to="#!">Home</MDBNavLink>
+                    </MDBNavItem>
+                    <MDBNavItem>
+                      <MDBNavLink to="#!">Link</MDBNavLink>
+                    </MDBNavItem>
+                    <MDBNavItem>
+                      <MDBNavLink to="#!">Profile</MDBNavLink>
+                    </MDBNavItem>
+                  </MDBNavbarNav>
+                  <MDBNavbarNav right>
+                    <MDBNavItem>
+                      <MDBFormInline waves>
+                        <div className="md-form my-0">
+                          <input
+                            className="form-control mr-sm-2"
+                            type="text"
+                            placeholder="Search"
+                            aria-label="Search"
+                          />
+                        </div>
+                      </MDBFormInline>
+                    </MDBNavItem>
+                  </MDBNavbarNav>
+                </MDBCollapse>
+              </MDBContainer>
+            </MDBNavbar>
+            {collapsed && overlay}
+          </div>
+        </Router>
+        <MDBView>
+          <MDBMask className="white-text gradient" />
+          <MDBContainer
+            style={{ height: "100%", width: "100%", paddingTop: "10rem" }}
+            className="d-flex justify-content-center white-text align-items-center"
+          >
+            <MDBRow>
+              <MDBCol md="6" className="text-center text-md-left mt-xl-5 mb-5">
+                <MDBAnimation type="fadeInLeft" delay=".3s">
+                  <h1 className="h1-responsive font-weight-bold mt-sm-5">
+                    Make everything simpler with pbook
+                  </h1>
+                  <hr className="hr-light" />
+                  <h6 className="mb-4">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Rem repellendus quasi fuga nesciunt dolorum nulla magnam
+                    veniam sapiente, fugiat! Commodi sequi non animi ea dolor
+                    molestiae iste.
+                  </h6>
+                  <Link to="/dent/doctors/signup">
+                    <MDBBtn outline color="white">
+                      For Doctors <i className="fas fa-user-md"></i>
+                    </MDBBtn>
+                  </Link>
+                  <Link to="/dent/clinics/signup">
+                    <MDBBtn color="white">
+                      For Clinics <i className="fas fa-clinic-medical"></i>
+                    </MDBBtn>
+                  </Link>
+                </MDBAnimation>
+              </MDBCol>
 
-          <hr className="my-5" />
+              <MDBCol md="6" xl="5" className="mt-xl-5">
+                <MDBAnimation type="fadeInRight" delay=".3s">
+                  <img
+                    src="https://mdbootstrap.com/img/Mockups/Transparent/Small/admin-new.png"
+                    alt=""
+                    className="img-fluid"
+                  />
+                </MDBAnimation>
+              </MDBCol>
+            </MDBRow>
+          </MDBContainer>
+        </MDBView>
 
-          {/* <!--Section: Main features & Quick Start--> */}
-          <section>
-            <h3 className="h3 text-center mb-5">About MDB</h3>
-
-            {/* <!--Grid row--> */}
-            <div className="row wow fadeIn">
-              {/* <!--Grid column--> */}
-              <div className="col-lg-6 col-md-12 px-4">
-                {/* <!--First row--> */}
-                <div className="row">
-                  <div className="col-1 mr-3">
-                    <i className="fas fa-code fa-2x indigo-text"></i>
-                  </div>
-                  <div className="col-10">
-                    <h5 className="feature-title">Bootstrap 4</h5>
-                    <p className="grey-text">
-                      Thanks to MDB you can take advantage of all feature of
-                      newest Bootstrap 4.
-                    </p>
-                  </div>
-                </div>
-                {/* <!--/First row--> */}
-
-                <div style={{ height: "30px" }}></div>
-
-                {/* <!--Second row--> */}
-                <div className="row">
-                  <div className="col-1 mr-3">
-                    <i className="fas fa-book fa-2x blue-text"></i>
-                  </div>
-                  <div className="col-10">
-                    <h5 className="feature-title">Detailed documentation</h5>
-                    <p className="grey-text">
-                      We give you detailed user-friendly documentation at your
-                      disposal. It will help you to implement your ideas easily.
-                    </p>
-                  </div>
-                </div>
-                {/* <!--/Second row--> */}
-
-                <div style={{ height: "30px" }}></div>
-
-                {/* <!--Third row--> */}
-                <div className="row">
-                  <div className="col-1 mr-3">
-                    <i className="fas fa-graduation-cap fa-2x cyan-text"></i>
-                  </div>
-                  <div className="col-10">
-                    <h5 className="feature-title">Lots of tutorials</h5>
-                    <p className="grey-text">
-                      We care about the development of our users. We have
-                      prepared numerous tutorials, which allow you to learn how
-                      to use MDB as well as other technologies.
-                    </p>
-                  </div>
-                </div>
-                {/* <!--/Third row--> */}
-              </div>
-              {/* <!--/Grid column--> */}
-
-              {/* <!--Grid column--> */}
-              <div className="col-lg-6 col-md-12">
-                <p className="h5 text-center mb-4">
-                  Watch our "5 min Quick Start" tutorial
-                </p>
-                <div className="embed-responsive embed-responsive-16by9">
-                  <iframe
-                    className="embed-responsive-item"
-                    src="https://www.youtube.com/embed/cXTThxoywNQ"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              </div>
-              {/* <!--/Grid column--> */}
-            </div>
-            {/* <!--/Grid row--> */}
-          </section>
-          {/* <!--Section: Main features & Quick Start--> */}
-
-          <hr className="my-5" />
-
-          {/* <!--Section: Not enough--> */}
-          <section>
-            <h2 className="my-5 h3 text-center">Not enough?</h2>
-
-            {/* <!--First row--> */}
-            <div className="row features-small mb-5 mt-3 wow fadeIn">
-              {/* <!--First column--> */}
-              <div className="col-md-4">
-                {/* <!--First row--> */}
-                <div className="row">
-                  <div className="col-2">
-                    <i className="fas fa-check-circle fa-2x indigo-text"></i>
-                  </div>
-                  <div className="col-10">
-                    <h6 className="feature-title">
-                      Free for personal and commercial use
-                    </h6>
-                    <p className="grey-text">
-                      Our license is user-friendly. Feel free to use MDB for
-                      both private as well as commercial projects.
-                    </p>
-                    <div style={{ height: "15px" }}></div>
-                  </div>
-                </div>
-                {/* <!--/First row--> */}
-
-                {/* <!--Second row--> */}
-                <div className="row">
-                  <div className="col-2">
-                    <i className="fas fa-check-circle fa-2x indigo-text"></i>
-                  </div>
-                  <div className="col-10">
-                    <h6 className="feature-title">400+ UI elements</h6>
-                    <p className="grey-text">
-                      An impressive collection of flexible components allows you
-                      to develop any project.
-                    </p>
-                    <div style={{ height: "15px" }}></div>
-                  </div>
-                </div>
-                {/* <!--/Second row--> */}
-
-                {/* <!--Third row--> */}
-                <div className="row">
-                  <div className="col-2">
-                    <i className="fas fa-check-circle fa-2x indigo-text"></i>
-                  </div>
-                  <div className="col-10">
-                    <h6 className="feature-title">600+ icons</h6>
-                    <p className="grey-text">
-                      Hundreds of useful, scalable, vector icons at your
-                      disposal.
-                    </p>
-                    <div style={{ height: "15px" }}></div>
-                  </div>
-                </div>
-                {/* <!--/Third row--> */}
-
-                {/* <!--Fourth row--> */}
-                <div className="row">
-                  <div className="col-2">
-                    <i className="fas fa-check-circle fa-2x indigo-text"></i>
-                  </div>
-                  <div className="col-10">
-                    <h6 className="feature-title">Fully responsive</h6>
-                    <p className="grey-text">
-                      It doesn't matter whether your project will be displayed
-                      on desktop, laptop, tablet or mobile phone. MDB looks
-                      great on each screen.
-                    </p>
-                    <div style={{ height: "15px" }}></div>
-                  </div>
-                </div>
-                {/* <!--/Fourth row--> */}
-              </div>
-              {/* <!--/First column--> */}
-
-              {/* <!--Second column--> */}
-              <div className="col-md-4 flex-center">
-                <img
-                  src="https://mdbootstrap.com/img/Others/screens.png"
-                  alt="MDB Magazine Template displayed on iPhone"
-                  className="z-depth-0 img-fluid"
-                />
-              </div>
-              {/* <!--/Second column--> */}
-
-              {/* <!--Third column--> */}
-              <div className="col-md-4 mt-2">
-                {/* <!--First row--> */}
-                <div className="row">
-                  <div className="col-2">
-                    <i className="fas fa-check-circle fa-2x indigo-text"></i>
-                  </div>
-                  <div className="col-10">
-                    <h6 className="feature-title">70+ CSS animations</h6>
-                    <p className="grey-text">
-                      Neat and easy to use animations, which will increase the
-                      interactivity of your project and delight your visitors.
-                    </p>
-                    <div style={{ height: "15px" }}></div>
-                  </div>
-                </div>
-                {/* <!--/First row--> */}
-
-                {/* <!--Second row--> */}
-                <div className="row">
-                  <div className="col-2">
-                    <i className="fas fa-check-circle fa-2x indigo-text"></i>
-                  </div>
-                  <div className="col-10">
-                    <h6 className="feature-title">
-                      Plenty of useful templates
-                    </h6>
-                    <p className="grey-text">
-                      Need inspiration? Use one of our predefined templates for
-                      free.
-                    </p>
-                    <div style={{ height: "15px" }}></div>
-                  </div>
-                </div>
-                {/* <!--/Second row--> */}
-
-                {/* <!--Third row--> */}
-                <div className="row">
-                  <div className="col-2">
-                    <i className="fas fa-check-circle fa-2x indigo-text"></i>
-                  </div>
-                  <div className="col-10">
-                    <h6 className="feature-title">Easy installation</h6>
-                    <p className="grey-text">
-                      5 minutes, a few clicks and... done. You will be surprised
-                      at how easy it is.
-                    </p>
-                    <div style={{ height: "15px" }}></div>
-                  </div>
-                </div>
-                {/* <!--/Third row--> */}
-
-                {/* <!--Fourth row--> */}
-                <div className="row">
-                  <div className="col-2">
-                    <i className="fas fa-check-circle fa-2x indigo-text"></i>
-                  </div>
-                  <div className="col-10">
-                    <h6 className="feature-title">Easy to use and customize</h6>
-                    <p className="grey-text">
-                      Using MDB is straightforward and pleasant. Components
-                      flexibility allows you deep customization. You will easily
-                      adjust each component to suit your needs.
-                    </p>
-                    <div style={{ height: "15px" }}></div>
-                  </div>
-                </div>
-                {/* <!--/Fourth row--> */}
-              </div>
-              {/* <!--/Third column--> */}
-            </div>
-            {/* <!--/First row--> */}
-          </section>
-          {/* <!--Section: Not enough--> */}
-
-          <hr className="mb-5" />
-
-          {/* <!--Section: More--> */}
-          <section>
-            <h2 className="my-5 h3 text-center">...and even more</h2>
-
-            {/* <!--First row--> */}
-            <div className="row features-small mt-5 wow fadeIn">
-              {/* <!--Grid column--> */}
-              <div className="col-xl-3 col-lg-6">
-                {/* <!--Grid row--> */}
-                <div className="row">
-                  <div className="col-2">
-                    <i
-                      className="fab fa-firefox fa-2x mb-1 indigo-text"
-                      aria-hidden="true"
-                    ></i>
-                  </div>
-                  <div className="col-10 mb-2 pl-3">
-                    <h5 className="feature-title font-bold mb-1">
-                      Cross-browser compatibility
-                    </h5>
-                    <p className="grey-text mt-2">
-                      Chrome, Firefox, IE, Safari, Opera, Microsoft Edge - MDB
-                      loves all browsers; all browsers love MDB.
-                    </p>
-                  </div>
-                </div>
-                {/* <!--/Grid row--> */}
-              </div>
-              {/* <!--/Grid column--> */}
-
-              {/* <!--Grid column--> */}
-              <div className="col-xl-3 col-lg-6">
-                {/* <!--Grid row--> */}
-                <div className="row">
-                  <div className="col-2">
-                    <i
-                      className="fas fa-level-up-alt fa-2x mb-1 indigo-text"
-                      aria-hidden="true"
-                    ></i>
-                  </div>
-                  <div className="col-10 mb-2">
-                    <h5 className="feature-title font-bold mb-1">
-                      Frequent updates
-                    </h5>
-                    <p className="grey-text mt-2">
-                      MDB becomes better every month. We love the project and
-                      enhance as much as possible.
-                    </p>
-                  </div>
-                </div>
-                {/* <!--/Grid row--> */}
-              </div>
-              {/* <!--/Grid column--> */}
-
-              {/* <!--Grid column--> */}
-              <div className="col-xl-3 col-lg-6">
-                {/* <!--Grid row--> */}
-                <div className="row">
-                  <div className="col-2">
-                    <i
-                      className="fas fa-comments fa-2x mb-1 indigo-text"
-                      aria-hidden="true"
-                    ></i>
-                  </div>
-                  <div className="col-10 mb-2">
-                    <h5 className="feature-title font-bold mb-1">
-                      Active community
-                    </h5>
-                    <p className="grey-text mt-2">
-                      Our society grows day by day. Visit our forum and check
-                      how it is to be a part of our family.
-                    </p>
-                  </div>
-                </div>
-                {/* <!--/Grid row--> */}
-              </div>
-              {/* <!--/Grid column--> */}
-
-              {/* <!--Grid column--> */}
-              <div className="col-xl-3 col-lg-6">
-                {/* <!--Grid row--> */}
-                <div className="row">
-                  <div className="col-2">
-                    <i
-                      className="fas fa-code fa-2x mb-1 indigo-text"
-                      aria-hidden="true"
-                    ></i>
-                  </div>
-                  <div className="col-10 mb-2">
-                    <h5 className="feature-title font-bold mb-1">jQuery 3.x</h5>
-                    <p className="grey-text mt-2">
-                      MDB is integrated with newest jQuery. Therefore you can
-                      use all the latest features which come along with it.
-                    </p>
-                  </div>
-                </div>
-                {/* <!--/Grid row--> */}
-              </div>
-              {/* <!--/Grid column--> */}
-            </div>
-            {/* <!--/First row--> */}
-
-            {/* <!--Second row--> */}
-            <div className="row features-small mt-4 wow fadeIn">
-              {/* <!--Grid column--> */}
-              <div className="col-xl-3 col-lg-6">
-                {/* <!--Grid row--> */}
-                <div className="row">
-                  <div className="col-2">
-                    <i
-                      className="fas fa-cubes fa-2x mb-1 indigo-text"
-                      aria-hidden="true"
-                    ></i>
-                  </div>
-                  <div className="col-10 mb-2">
-                    <h5 className="feature-title font-bold mb-1">Modularity</h5>
-                    <p className="grey-text mt-2">
-                      Material Design for Bootstrap comes with both, compiled,
-                      ready to use libraries including all features as well as
-                      modules for CSS (SASS files) and JS.
-                    </p>
-                  </div>
-                </div>
-                {/* <!--/Grid row--> */}
-              </div>
-              {/* <!--/Grid column--> */}
-
-              {/* <!--Grid column--> */}
-              <div className="col-xl-3 col-lg-6">
-                {/* <!--Grid row--> */}
-                <div className="row">
-                  <div className="col-2">
-                    <i
-                      className="fas fa-question fa-2x mb-1 indigo-text"
-                      aria-hidden="true"
-                    ></i>
-                  </div>
-                  <div className="col-10 mb-2">
-                    <h5 className="feature-title font-bold mb-1">
-                      Technical support
-                    </h5>
-                    <p className="grey-text mt-2">
-                      We care about reliability. If you have any questions - do
-                      not hesitate to contact us.
-                    </p>
-                  </div>
-                </div>
-                {/* <!--/Grid row--> */}
-              </div>
-              {/* <!--/Grid column--> */}
-
-              {/* <!--Grid column--> */}
-              <div className="col-xl-3 col-lg-6">
-                {/* <!--Grid row--> */}
-                <div className="row">
-                  <div className="col-2">
-                    <i
-                      className="fas fa-th fa-2x mb-1 indigo-text"
-                      aria-hidden="true"
-                    ></i>
-                  </div>
-                  <div className="col-10 mb-2">
-                    <h5 className="feature-title font-bold mb-1">Flexbox</h5>
-                    <p className="grey-text mt-2">
-                      MDB fully supports Flex Box. You can forget about
-                      alignment issues.
-                    </p>
-                  </div>
-                </div>
-                {/* <!--/Grid row--> */}
-              </div>
-              {/* <!--/Grid column--> */}
-
-              {/* <!--Grid column--> */}
-              <div className="col-xl-3 col-lg-6">
-                {/* <!--Grid row--> */}
-                <div className="row">
-                  <div className="col-2">
-                    <i
-                      className="far fa-file-code fa-2x mb-1 indigo-text"
-                      aria-hidden="true"
-                    ></i>
-                  </div>
-                  <div className="col-10 mb-2">
-                    <h5 className="feature-title font-bold mb-1">SASS files</h5>
-                    <p className="grey-text mt-2">
-                      Arranged and well documented .scss files can't wait until
-                      you compile them.
-                    </p>
-                  </div>
-                </div>
-                {/* <!--/Grid row--> */}
-              </div>
-              {/* <!--/Grid column--> */}
-            </div>
-            {/* <!--/Second row--> */}
-          </section>
-          {/* <!--Section: More--> */}
-        </div>
-      </main>
-      {/* <!--Main layout--> */}
-    </div>
-  );
+        <MDBContainer>
+          <MDBRow className="py-5">
+            <MDBCol md="12" className="text-center">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
+            </MDBCol>
+          </MDBRow>
+        </MDBContainer>
+      </div>
+    );
+  }
 }
 
-export default HomePage;
+export default AppPage;
