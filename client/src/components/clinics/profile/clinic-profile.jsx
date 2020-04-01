@@ -15,7 +15,7 @@ import {
 } from "mdbreact";
 import src1 from "../../../assets/img-1.jpg";
 import SideNavigation from "./clinin-sidenav";
-// import ClinicPatient from "../clinic-patients/clinicpatients";
+
 import ClinicPatients from "../clinic-patients/clinicpatients";
 
 const ClinicProfile = props => {
