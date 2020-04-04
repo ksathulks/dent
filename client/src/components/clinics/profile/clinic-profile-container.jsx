@@ -57,6 +57,7 @@ const ClinicProfileContainer = () => {
   // if (p.email) {
   if (clinic != null) {
     return (
+      
       <MDBContainer>
         {/* <Nav />
           <SideNavigation /> */}
@@ -64,6 +65,7 @@ const ClinicProfileContainer = () => {
         <ClinicProfile clinic={clinic} />
         {/* <ClinicProfile clinic={clinic} /> */}
       </MDBContainer>
+     
     );
   } else {
     return (

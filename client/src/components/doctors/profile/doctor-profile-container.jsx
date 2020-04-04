@@ -12,7 +12,7 @@ import DoctorProfile from "./doctor-profile";
 //import Nav from "../../shared/nav/nav";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-
+import DoctorInvitation from "../invite/doctor-invite"
 const DoctorProfileContainer = () => {
   const history = useHistory();
   const [doctor, setDoctor] = useState(null);
@@ -53,7 +53,7 @@ const DoctorProfileContainer = () => {
       }
     }
   }, []);
-
+  
   // if (p.email) {
   if (doctor != null) {
     return (
@@ -62,7 +62,7 @@ const DoctorProfileContainer = () => {
           <SideNavigation /> */}
 
         <DoctorProfile doctor={doctor} /> 
-      
+         {/* <DoctorInvitation  />  */}
       
         {/* <ClinicProfile clinic={clinic} /> */}
       </MDBContainer>

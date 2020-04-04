@@ -15,7 +15,7 @@ import {
 } from "mdbreact";
 import src1 from "../../../assets/img-1.jpg";
 import SideNavigation from "./clinin-sidenav";
-
+import Invitation from "../invites/invitation"
 import ClinicPatients from "../clinic-patients/clinicpatients";
 
 const ClinicProfile = props => {
@@ -74,6 +74,18 @@ const ClinicProfile = props => {
               </div>
             </MDBCardBody>
           </MDBCard>
+        </MDBCol>
+        <MDBCol>
+            <MDBCard>
+              <MDBCardBody> 
+              <MDBCardTitle className="text-center mb-2 font-bold">
+                {/* Alice Mayer */}
+                {"Invites "}
+              </MDBCardTitle>
+              <Invitation clinic = {email}/>
+              </MDBCardBody>  
+            </MDBCard>
+
         </MDBCol>
         <MDBCol md="6" lg="9">
           <section className="text-center pb-3">
