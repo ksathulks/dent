@@ -1,109 +1,126 @@
 import React, { Component, useState, useEffect } from "react";
-import {
-  MDBContainer,
-  MDBBtn,
-  MDBModal,
-  MDBModalBody,
-  MDBModalHeader,
-  MDBModalFooter
-} from "mdbreact";
-import SideNavigation from "./clinin-sidenav";
-import ClinicProfile from "./clinic-profile";
-import Nav from "../../shared/nav/nav";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 
-const ClinicProfileContainer = () => {
-  const history = useHistory();
-  const [clinic, setClinic] = useState(null);
-  useEffect(() => {
-    if (clinic === null) {
-      if (sessionStorage.getItem("jwt")) {
-        if (sessionStorage.getItem("user")) {
-          // send ajax calls
-          let user = JSON.parse(sessionStorage.getItem("user"));
-          console.log("-----------------------");
-          console.log(user);
-          console.log("-----------------------");
-          alert(user.email);
-          var p;
-          axios
-            .get("http://localhost:1337/clinics?email=" + user.email)
-            .then(async response => {
-              // handle success
-              console.log(response);
-              if (response.data.length === 0) {
-                history.push("/dent/clinics/register");
-              }
-              p = await response.data;
-              setClinic(p);
-            })
-            .catch(error => {
-              // handle error
+import "./clinic-profile-container.css";
+import Footer from "../../shared/footer/footer";
+import TopNavigation from "./topNavigation";
+import SideNavigation from "./sideNavigation";
+import DashboardPage from "./pages/DashboardPage";
+import ProfilePage from "./pages/ProfilePage";
+import TablesPage from "./pages/TablesPage";
+import MapsPage from "./pages/MapsPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import ModalSection from "../profile/pages/sections/ModalSection";
 
-              console.log("************888");
-              console.log(error);
-              console.log("*****************");
-              //   history.push("/dent/clinics/profile");
-            })
-            .finally(() => {
-              // always executed
-            });
-        }
-      }
-    }
-  }, []);
+class ClinicProfileContainer extends Component {
+  constructor() {
+    super();
+  }
 
-  // if (p.email) {
-  if (clinic != null) {
+  state = {
+    childName: "Dashboard",
+    isLoading: true,
+    clinic: {},
+    showModel: false,
+  };
+  componentDidMount() {
+    this.getClinic();
+  }
+
+  handleModelToggle = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      showModel: !this.state.showModel,
+    }));
+  };
+
+  handleChildChange = (_childName) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      isLoading: false,
+      childName: _childName,
+    }));
+  };
+
+  handleClinicChange = (_clinic) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      isLoading: false,
+      clinic: _clinic,
+    }));
+  };
+
+  render() {
+    const { isLoading } = this.state;
     return (
-      
-      <MDBContainer>
-        {/* <Nav />
-          <SideNavigation /> */}
+      <div className="flexible-content">
+        <TopNavigation />
 
-        <ClinicProfile clinic={clinic} />
-        {/* <ClinicProfile clinic={clinic} /> */}
-      </MDBContainer>
-     
-    );
-  } else {
-    return (
-      <MDBContainer>{/* <Nav />
-          <SideNavigation /> */}</MDBContainer>
+        <SideNavigation handleChildChange={this.handleChildChange} />
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <main id="content" className="p-5">
+            {this.state.childName == "Dashboard" && <DashboardPage />}
+            {this.state.childName == "Profile" && (
+              <ProfilePage
+                handleClinicChange={this.handleClinicChange}
+                clinic={this.state.clinic}
+                handleChildChange={this.handleChildChange}
+                handleModelToggle={this.handleModelToggle}
+              />
+            )}
+            {this.state.showModel && (
+              <ModalSection
+                handleModelToggle={this.handleModelToggle}
+                showModel={this.state.showModel}
+                updateClinic={this.updateClinic}
+                clinic={this.state.clinic}
+              />
+            )}
+            {this.state.childName == "Doctors" && <TablesPage />}
+            {this.state.childName == "Patients" && <MapsPage />}
+            {this.state.childName == "Ledger" && <NotFoundPage />}
+            {this.state.childName == "AddPatient" && <NotFoundPage />}
+            {this.state.childName == "404" && <NotFoundPage />}
+          </main>
+        )}
+        <Footer />
+      </div>
     );
   }
 
-  // } else {
-  //   return <h1>user not found</h1>;
-  // }
-};
+  updateClinic = async (newClinic) => {
+    // axios.put();
+  };
 
-// function getClinicByEmail(email){
-//   return axios.get("http://localhost:1337/clinics?email=" + email)
-// }
+  getClinic = async () => {
+    if (sessionStorage.getItem("user")) {
+      if (sessionStorage.getItem("jwt")) {
+        let user = JSON.parse(sessionStorage.getItem("user"));
+        let _clinic;
+        axios
+          .get("http://localhost:1337/clinics?email=" + user.email)
+          .then(async (response) => {
+            if (response.data.length === 0) {
+              this.props.history.push("/dent/clinics/register");
+            }
+            console.log(response.data[0]);
+            _clinic = await response.data[0];
+            console.log("cc", _clinic);
+            this.handleClinicChange(_clinic);
+          })
+          .catch((error) => {
+            // alert("Error occured, Please try again later!!!");
+          });
+
+        return _clinic;
+      }
+    } else {
+      alert("please sign in again");
+      this.props.history.push("/dent");
+    }
+  };
+}
 
 export default ClinicProfileContainer;
-
-// class ClinicProfileContainer extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     console.log("container  ");
-//     console.log(props);
-//     // this.state = {
-//     //     modal: false
-//     // }
-//   }
-
-//   render() {
-//     return (
-//       <MDBContainer>
-//           <Nav />
-//           <SideNavigation />
-//           <ClinicProfile data={this.props} />
-//       </MDBContainer>
-//     );
-//   }
-// }
-
-// export default ClinicProfileContainer;
