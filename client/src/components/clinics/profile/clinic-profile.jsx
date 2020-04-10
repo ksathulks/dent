@@ -82,7 +82,7 @@ const ClinicProfile = props => {
                 {/* Alice Mayer */}
                 {"Invites "}
               </MDBCardTitle>
-              <Invitation clinic = {email}/>
+              <Invitation clinic = {props}/>
               </MDBCardBody>  
             </MDBCard>
 
