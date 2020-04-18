@@ -7,21 +7,21 @@ import TopNavigation from "./topNavigation";
 import SideNavigation from "./sideNavigation";
 import DashboardPage from "./pages/DashboardPage";
 import ProfilePage from "./pages/ProfilePage";
-import TablesPage from "./pages/TablesPage";
-import MapsPage from "./pages/MapsPage";
+import DoctorPage from "./pages/DoctorPage";
+import PatientsPage from "./pages/PatientsPage";
 import NotFoundPage from "./pages/NotFoundPage";
-import ModalSection from "../profile/pages/sections/ModalSection";
 
 class ClinicProfileContainer extends Component {
-  constructor() {
-    super();
-  }
+  // constructor() {
+  //   super();
+  // }
 
   state = {
     childName: "Dashboard",
     isLoading: true,
     clinic: {},
     showModel: false,
+    docEmail: "",
   };
   componentDidMount() {
     this.getClinic();
@@ -31,6 +31,7 @@ class ClinicProfileContainer extends Component {
     this.setState((prevState) => ({
       ...prevState,
       showModel: !this.state.showModel,
+      isLoading: false,
     }));
   };
 
@@ -41,14 +42,27 @@ class ClinicProfileContainer extends Component {
       childName: _childName,
     }));
   };
+  updatedClinic = async () => {
+    await this.getClinic();
+    // axios.put();
+  };
 
   handleClinicChange = (_clinic) => {
     this.setState((prevState) => ({
       ...prevState,
-      isLoading: false,
       clinic: _clinic,
+      isLoading: false,
     }));
   };
+
+  viewPatientsWRTDoctor = (_docEmail) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      childName: "Patients",
+      docEmail: _docEmail,
+    }));
+  };
+  editPatient = (_pEmail) => {};
 
   render() {
     const { isLoading } = this.state;
@@ -61,25 +75,40 @@ class ClinicProfileContainer extends Component {
           <div>Loading...</div>
         ) : (
           <main id="content" className="p-5">
-            {this.state.childName == "Dashboard" && <DashboardPage />}
-            {this.state.childName == "Profile" && (
+            {this.state.childName === "Dashboard" && <DashboardPage />}
+            {this.state.childName === "Profile" && (
               <ProfilePage
                 handleClinicChange={this.handleClinicChange}
                 clinic={this.state.clinic}
                 handleChildChange={this.handleChildChange}
                 handleModelToggle={this.handleModelToggle}
-              />
-            )}
-            {this.state.showModel && (
-              <ModalSection
-                handleModelToggle={this.handleModelToggle}
+                updatedClinic={this.updatedClinic}
                 showModel={this.state.showModel}
-                updateClinic={this.updateClinic}
-                clinic={this.state.clinic}
               />
             )}
-            {this.state.childName == "Doctors" && <TablesPage />}
-            {this.state.childName == "Patients" && <MapsPage />}
+            {this.state.childName === "Doctors" && (
+              <DoctorPage
+                doctors={this.state.clinic.doctors}
+                viewPatientsWRTDoctor={this.viewPatientsWRTDoctor}
+              />
+            )}
+            {/* {this.state.childName === "Patients" &&
+              this.state.docEmail === "false" && (
+                <PatientsPage
+                  patients={this.state.clinic.patients}
+                  editPatient={this.editPatient}
+                  viewPatientsWRTDoctor={this.viewPatientsWRTDoctor}
+                />
+              )} */}
+            {this.state.childName === "Patients" && (
+              <PatientsPage
+                docEmail={this.state.docEmail}
+                patients={this.state.clinic.patients}
+                editPatient={this.editPatient}
+                editPatient={this.editPatient}
+                viewPatientsWRTDoctor={this.viewPatientsWRTDoctor}
+              />
+            )}
             {this.state.childName == "Ledger" && <NotFoundPage />}
             {this.state.childName == "AddPatient" && <NotFoundPage />}
             {this.state.childName == "404" && <NotFoundPage />}
@@ -89,10 +118,6 @@ class ClinicProfileContainer extends Component {
       </div>
     );
   }
-
-  updateClinic = async (newClinic) => {
-    // axios.put();
-  };
 
   getClinic = async () => {
     if (sessionStorage.getItem("user")) {

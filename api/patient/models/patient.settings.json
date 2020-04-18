@@ -42,6 +42,10 @@
       "type": "email",
       "unique": false,
       "required": true
+    },
+    "docEmail": {
+      "type": "email",
+      "required": true
     }
   }
 }

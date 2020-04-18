@@ -12,7 +12,7 @@ import * as Yup from "yup";
 import axios from "axios";
 // import { useHistory } from "react-router-dom";
 
-class ModalSection extends Component {
+class PatientEditModel extends Component {
   constructor(props) {
     super(props);
     // const clinic = this.props.clinic;
@@ -246,4 +246,4 @@ class ModalSection extends Component {
   }
 }
 
-export default ModalSection;
+export default PatientEditModel;

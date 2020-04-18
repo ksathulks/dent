@@ -32,12 +32,12 @@ const SideNavigation = (props) => {
         </button>
         <button
           onClick={() => {
-            props.handleChildChange("Maps");
+            props.handleChildChange("Doctors");
           }}
         >
           <MDBListGroupItem>
             <MDBIcon icon="map" className="mr-3" />
-            Maps
+            Doctors
           </MDBListGroupItem>
         </button>
         <button

@@ -14,6 +14,7 @@ import {
   MDBIcon,
 } from "mdbreact";
 import src1 from "../../../../assets/img-1.jpg";
+import ModalSection from "../pages/sections/ModalSection";
 
 const ProfilePage = (props) => {
   console.log(props);
@@ -219,6 +220,14 @@ const ProfilePage = (props) => {
           </section>
         </MDBCol>
       </MDBRow>
+      {props.showModel && props.clinic ? (
+        <ModalSection
+          handleModelToggle={props.handleModelToggle}
+          clinic={props.clinic}
+          showModel={props.showModel}
+          updatedClinic={props.updatedClinic}
+        />
+      ) : null}
     </React.Fragment>
   );
 };
