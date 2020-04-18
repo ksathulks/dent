@@ -20,7 +20,7 @@ import styled from "@emotion/styled";
 import * as Yup from "yup";
 import axios from "axios";
 
-class PatientEditModel extends Component {
+class PatientAddModel extends Component {
   constructor(props) {
     super(props);
   }
@@ -33,7 +33,7 @@ class PatientEditModel extends Component {
     this.setState({
       [modalNumber]: !this.state[modalNumber],
     });
-    this.props.handleModelToggle("editPatientModel");
+    this.props.handleModelToggle("addPatientModel");
   };
 
   render() {
@@ -74,8 +74,6 @@ class PatientEditModel extends Component {
         </>
       );
     };
-    const _id = this.props.patient.id;
-    console.log(this.props.patient);
     return (
       <MDBContainer>
         <MDBModal
@@ -84,19 +82,20 @@ class PatientEditModel extends Component {
           fullHeight
           position="right"
         >
-          <MDBModalHeader toggle={this.toggle(8)}>Edit Patient</MDBModalHeader>
+          <MDBModalHeader toggle={this.toggle(8)}>
+            Add New Patient
+          </MDBModalHeader>
           <MDBModalBody>
             <Formik
               initialValues={{
-                ...this.props.patient,
-                // name: "",
-                // address: "",
-                // phone: "",
-                // treatmentPlan: "",
-                // regDate: "",
-                // balance: "",
-                // email: "",
-                // docEmail: "",
+                name: "",
+                address: "",
+                phone: "",
+                treatmentPlan: "",
+                regDate: "",
+                balance: "",
+                email: "",
+                docEmail: "",
               }}
               validationSchema={Yup.object().shape({
                 name: Yup.string().required("Name is required"),
@@ -120,18 +119,36 @@ class PatientEditModel extends Component {
               })}
               onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
-                  const url = "http://localhost:1337/patients/" + _id;
+                  const url = "http://localhost:1337/patients";
                   axios
-                    .put(url, values)
+                    .post(url, values)
                     .then((response) => {
                       if (response.status == 200) {
-                        alert("patient updated successfully");
-                        this.props.handleModelToggle("editPatientModel");
-                        this.props.updatedClinic();
+                        alert("patient registered successfully");
+                        const _patients = this.props.patients;
+                        _patients.push(response.data);
+                        const _clinic = {
+                          patients: _patients,
+                        };
+                        axios
+                          .put(
+                            "http://localhost:1337/clinics/" +
+                              this.props.clinicId,
+                            _clinic
+                          )
+                          .then((response) => {
+                            if (response.status == 200) {
+                              alert("patient added successfully");
+                              this.props.handleModelToggle("addPatientModel");
+                              this.props.updatedClinic();
+                            }
+                          })
+                          .catch((e) => {
+                            alert(JSON.parse(JSON.stringify(e)).message);
+                          });
                       }
                     })
                     .catch((e) => {
-                      console.log(e);
                       alert(JSON.parse(JSON.stringify(e)).message);
                     });
                   setSubmitting(false);
@@ -246,7 +263,6 @@ class PatientEditModel extends Component {
                                   ? " is-invalid"
                                   : "")
                               }
-                              disabled
                             />
                             <ErrorMessage
                               name="regDate"
@@ -265,7 +281,6 @@ class PatientEditModel extends Component {
                                   ? " is-invalid"
                                   : "")
                               }
-                              disabled
                             />
                             <ErrorMessage
                               name="email"
@@ -316,4 +331,4 @@ class PatientEditModel extends Component {
   }
 }
 
-export default PatientEditModel;
+export default PatientAddModel;

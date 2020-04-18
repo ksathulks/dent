@@ -6,8 +6,8 @@ import TableSection from "./sections/TableSection";
 import BreadcrumSection from "./sections/BreadcrumSection";
 import ChartSection1 from "./sections/ChartSection1";
 import ChartSection2 from "./sections/ChartSection2";
-import MapSection from "./sections/MapSection";
-import ModalSection from "./sections/ModalSection";
+// import MapSection from "./sections/MapSection";
+// import ModalSection from "./sections/ProfileEditModel";
 
 const DashboardPage = () => {
   return (
@@ -17,10 +17,10 @@ const DashboardPage = () => {
       <ChartSection1 />
       <TableSection />
       <ChartSection2 />
-      <MDBRow className="mb-4">
-        {/* <MapSection /> */}
+      {/* <MDBRow className="mb-4">
+        <MapSection />
         <ModalSection />
-      </MDBRow>
+      </MDBRow> */}
       <AdminCardSection2 />
     </React.Fragment>
   );

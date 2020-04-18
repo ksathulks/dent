@@ -1,8 +1,9 @@
 import React from "react";
 import { MDBDataTable } from "mdbreact";
+import PatientEditModel from "../pages/sections/PatientEditModel";
+import PatientAddModel from "../pages/sections/PatientAddModel";
 
 const PatientsPage = (props) => {
-  console.log("###", props);
   var rows = [];
   if (props.docEmail != "") {
     var filteredPatients = props.patients.filter((p) => {
@@ -17,8 +18,10 @@ const PatientsPage = (props) => {
       button: (
         <a>
           <button
+            type="button"
+            className="btn btn-outline-danger"
             onClick={() => {
-              props.editPatient(p);
+              props.handleEditPatient(p);
             }}
           >
             Modify
@@ -103,6 +106,8 @@ const PatientsPage = (props) => {
   return (
     <React.Fragment>
       <button
+        type="button"
+        className="btn btn-outline-danger"
         onClick={() => {
           props.viewPatientsWRTDoctor("");
         }}
@@ -110,9 +115,14 @@ const PatientsPage = (props) => {
         Reset
       </button>
       <button
-      // onClick={() => {
-      //   viewPatientsWRTDoctor("");
-      // }}
+        type="button"
+        className="btn btn-outline-primary"
+        onClick={() => {
+          console.log(props);
+          // props.viewPatientsWRTDoctor("");
+          props.handleModelToggle("addPatientModel");
+          console.log(props);
+        }}
       >
         Add New
       </button>
@@ -132,6 +142,27 @@ const PatientsPage = (props) => {
         //   // }
         // }}
       />
+      {props.showaddPatientModel && props.clinic ? (
+        <PatientAddModel
+          handleModelToggle={props.handleModelToggle}
+          clinicId={props.clinic._id}
+          showModel={props.showaddPatientModel}
+          doctors={props.doctors}
+          updatedClinic={props.updatedClinic}
+          patients={props.clinic.patients}
+        />
+      ) : null}
+      {props.showeditPatientModel && props.patient ? (
+        <PatientEditModel
+          handleEditPatient={props.handleEditPatient}
+          handleModelToggle={props.handleModelToggle}
+          clinicId={props.clinic._id}
+          showModel={props.showeditPatientModel}
+          doctors={props.doctors}
+          updatedClinic={props.updatedClinic}
+          patient={props.patient}
+        />
+      ) : null}
     </React.Fragment>
   );
 };

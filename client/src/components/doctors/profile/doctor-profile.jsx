@@ -11,15 +11,14 @@ import {
   MDBCardText,
   MDBCardFooter,
   MDBBtn,
-  MDBIcon
+  MDBIcon,
 } from "mdbreact";
 import src1 from "../../../assets/img-1.jpg";
 //import SideNavigation from "./clinin-sidenav";
-import ClinicPatient from "../../clinics/clinic-patients/clinicpatients";
+// import ClinicPatient from "../../clinics/clinic-patients/clinicpatients";
 import DoctorInvite from "../invite/doctor-invite";
 
-
-const DoctorProfile = props => {
+const DoctorProfile = (props) => {
   var x;
   const [showPatients, setShowPatients] = useState(false);
   //   const [patientsDiv, setPatientsDiv] = useState(<div></div>);
@@ -38,7 +37,7 @@ const DoctorProfile = props => {
     patients,
     doctor_payments,
     patient_payments,
-    clinics
+    clinics,
   } = props.doctor[0];
   //   }
 
@@ -77,20 +76,19 @@ const DoctorProfile = props => {
           </MDBCard>
         </MDBCol>
         <MDBCol>
-            <MDBCard>
-              <MDBCardBody> 
+          <MDBCard>
+            <MDBCardBody>
               <MDBCardTitle className="text-center mb-2 font-bold">
                 {/* Alice Mayer */}
                 {"Invite Clinic "}
               </MDBCardTitle>
-              <DoctorInvite doctormail={email}/>
-              </MDBCardBody>  
-            </MDBCard>
-
+              <DoctorInvite doctormail={email} />
+            </MDBCardBody>
+          </MDBCard>
         </MDBCol>
         <MDBCol md="6" lg="9">
           <section className="text-center pb-3">
-            {clinics.map(d => {
+            {clinics.map((d) => {
               return (
                 <MDBCol lg="6" xl="5" className="mb-3">
                   <MDBCard className="d-flex mb-5">
@@ -131,7 +129,7 @@ const DoctorProfile = props => {
             })}
 
             <MDBRow className="d-flex justify-content-center">
-              {showPatients && <ClinicPatient patients={patients} />}
+              {/* {showPatients && <ClinicPatient patients={patients} />} */}
             </MDBRow>
 
             {/* <MDBRow className="d-flex justify-content-center">

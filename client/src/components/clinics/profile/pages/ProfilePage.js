@@ -14,7 +14,8 @@ import {
   MDBIcon,
 } from "mdbreact";
 import src1 from "../../../../assets/img-1.jpg";
-import ModalSection from "../pages/sections/ModalSection";
+import ProfileEditModel from "../pages/sections/ProfileEditModel";
+import PatientAddModel from "../pages/sections/PatientAddModel";
 
 const ProfilePage = (props) => {
   console.log(props);
@@ -58,7 +59,7 @@ const ProfilePage = (props) => {
                   outline
                   color="primary"
                   onClick={() => {
-                    props.handleModelToggle();
+                    props.handleModelToggle("editProfileModel");
                   }}
                 >
                   Update
@@ -201,7 +202,11 @@ const ProfilePage = (props) => {
                   </MDBCardBody>
                   <MDBCardFooter className="links-light profile-card-footer">
                     <span className="right">
-                      <a onClick={() => props.handleChildChange("AddPatient")}>
+                      <a
+                        onClick={() => {
+                          props.handleModelToggle("addPatientModel");
+                        }}
+                      >
                         <center>
                           <button
                             type="button"
@@ -220,12 +225,23 @@ const ProfilePage = (props) => {
           </section>
         </MDBCol>
       </MDBRow>
-      {props.showModel && props.clinic ? (
-        <ModalSection
+      {props.showeditProfileModel && props.clinic ? (
+        <ProfileEditModel
           handleModelToggle={props.handleModelToggle}
           clinic={props.clinic}
-          showModel={props.showModel}
+          showModel={props.showeditProfileModel}
           updatedClinic={props.updatedClinic}
+        />
+      ) : null}
+
+      {props.showaddPatientModel && props.clinic ? (
+        <PatientAddModel
+          handleModelToggle={props.handleModelToggle}
+          clinicId={props.clinic._id}
+          showModel={props.showaddPatientModel}
+          doctors={doctors}
+          updatedClinic={props.updatedClinic}
+          patients={props.clinic.patients}
         />
       ) : null}
     </React.Fragment>

@@ -1,9 +1,11 @@
 import React from "react";
 import logo from "../../../assets/mdb-react.png";
 import { MDBListGroup, MDBListGroupItem, MDBIcon } from "mdbreact";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const SideNavigation = (props) => {
+  const history = useHistory();
   return (
     <div className="sidebar-fixed position-fixed">
       <a className="logo-wrapper waves-effect">
@@ -38,6 +40,28 @@ const SideNavigation = (props) => {
           <MDBListGroupItem>
             <MDBIcon icon="map" className="mr-3" />
             Doctors
+          </MDBListGroupItem>
+        </button>
+        <button
+          onClick={() => {
+            props.handleChildChange("Patients");
+          }}
+        >
+          <MDBListGroupItem>
+            <MDBIcon icon="map" className="mr-3" />
+            Patients
+          </MDBListGroupItem>
+        </button>
+        <button
+          onClick={() => {
+            sessionStorage.removeItem("jwt");
+            sessionStorage.removeItem("user");
+            history.push("/dent");
+          }}
+        >
+          <MDBListGroupItem>
+            <MDBIcon icon="exclamation" className="mr-3" />
+            LogOut
           </MDBListGroupItem>
         </button>
         <button

@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component } from "react";
 import axios from "axios";
 
 import "./clinic-profile-container.css";
@@ -20,17 +20,31 @@ class ClinicProfileContainer extends Component {
     childName: "Dashboard",
     isLoading: true,
     clinic: {},
-    showModel: false,
+    patient: {},
+    showeditProfileModel: false,
+    showeditPatientModel: false,
+    showaddPatientModel: false,
     docEmail: "",
   };
   componentDidMount() {
     this.getClinic();
   }
 
-  handleModelToggle = () => {
+  handleModelToggle = (modelName) => {
+    let model = "show" + modelName;
     this.setState((prevState) => ({
       ...prevState,
-      showModel: !this.state.showModel,
+      [model]: !this.state[model],
+      isLoading: false,
+    }));
+  };
+
+  handleEditPatient = (_patient) => {
+    let model = "showeditPatientModel";
+    this.setState((prevState) => ({
+      ...prevState,
+      patient: _patient,
+      [model]: !this.state[model],
       isLoading: false,
     }));
   };
@@ -62,7 +76,6 @@ class ClinicProfileContainer extends Component {
       docEmail: _docEmail,
     }));
   };
-  editPatient = (_pEmail) => {};
 
   render() {
     const { isLoading } = this.state;
@@ -78,12 +91,12 @@ class ClinicProfileContainer extends Component {
             {this.state.childName === "Dashboard" && <DashboardPage />}
             {this.state.childName === "Profile" && (
               <ProfilePage
-                handleClinicChange={this.handleClinicChange}
                 clinic={this.state.clinic}
                 handleChildChange={this.handleChildChange}
                 handleModelToggle={this.handleModelToggle}
                 updatedClinic={this.updatedClinic}
-                showModel={this.state.showModel}
+                showeditProfileModel={this.state.showeditProfileModel}
+                showaddPatientModel={this.state.showaddPatientModel}
               />
             )}
             {this.state.childName === "Doctors" && (
@@ -104,8 +117,14 @@ class ClinicProfileContainer extends Component {
               <PatientsPage
                 docEmail={this.state.docEmail}
                 patients={this.state.clinic.patients}
-                editPatient={this.editPatient}
-                editPatient={this.editPatient}
+                patient={this.state.patient}
+                doctors={this.state.clinic.doctors}
+                showeditPatientModel={this.state.showeditPatientModel}
+                showaddPatientModel={this.state.showaddPatientModel}
+                handleModelToggle={this.handleModelToggle}
+                handleEditPatient={this.handleEditPatient}
+                updatedClinic={this.updatedClinic}
+                clinic={this.state.clinic}
                 viewPatientsWRTDoctor={this.viewPatientsWRTDoctor}
               />
             )}

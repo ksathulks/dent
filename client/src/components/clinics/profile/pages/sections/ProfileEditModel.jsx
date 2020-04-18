@@ -12,12 +12,13 @@ import * as Yup from "yup";
 import axios from "axios";
 // import { useHistory } from "react-router-dom";
 
-class ModalSection extends Component {
+class ProfileEditModel extends Component {
   constructor(props) {
     super(props);
     // const clinic = this.props.clinic;
     // var _name = clinic.name;
     // console.log(this.props.clinic.name);
+    console.log(props);
   }
   state = {
     modal8: this.props.showModel,
@@ -37,7 +38,7 @@ class ModalSection extends Component {
     this.setState({
       [modalNumber]: !this.state[modalNumber],
     });
-    this.props.handleModelToggle();
+    this.props.handleModelToggle("editProfileModel");
   };
 
   render() {
@@ -104,7 +105,7 @@ class ModalSection extends Component {
                       console.log(response);
                       if (response.status == 200) {
                         alert("updated successfully");
-                        this.props.handleModelToggle();
+                        this.props.handleModelToggle("editProfileModel");
                         this.props.updatedClinic();
                         // this.setState(state => ({
                         //   regSuccess: true,
@@ -246,4 +247,4 @@ class ModalSection extends Component {
   }
 }
 
-export default ModalSection;
+export default ProfileEditModel;

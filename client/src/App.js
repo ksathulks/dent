@@ -12,9 +12,8 @@ import DoctorInvite from "./components/doctors/invite/doctor-invite";
 import ClinicSignup from "./components/clinics/register/clinic-signup";
 import ClinicLogin from "./components/clinics/login/clinic-login";
 import ClinicProfileContainer from "./components/clinics/profile/clinic-profile-container";
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 import ClinicRegister from "./components/clinics/register/clinic-register";
-
 
 function App() {
   return (
@@ -24,14 +23,21 @@ function App() {
       <Route path="/dent/doctors/signup" exact component={DoctorSignup} />
       <Route path="/dent/doctors/register" exact component={DoctorRegister} />
       <Route path="/dent/doctors/login" exact component={DoctorLogin} />
-      <Route path="/dent/doctors/profile" exact component={DoctorProfileContainer} />
+      <Route
+        path="/dent/doctors/profile"
+        exact
+        component={DoctorProfileContainer}
+      />
       <Route path="/dent/invitations" exact component={DoctorInvite} />
-     
+
       <Route path="/dent/clinics/signup" exact component={ClinicSignup} />
       <Route path="/dent/clinics/register" exact component={ClinicRegister} />
       <Route path="/dent/clinics/login" exact component={ClinicLogin} />
-      <Route path="/dent/clinics/profile" exact component={ClinicProfileContainer} />
-      
+      <Route
+        path="/dent/clinics/profile"
+        exact
+        component={ClinicProfileContainer}
+      />
 
       {/* <Redirect from="/" to="/dent" /> */}
       {/* <Redirect from="*" to="/dent" /> */}

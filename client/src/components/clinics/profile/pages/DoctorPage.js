@@ -11,6 +11,8 @@ const DoctorPage = (props) => {
       button: (
         <a>
           <button
+            type="button"
+            className="btn btn-outline-primary"
             onClick={() => {
               props.viewPatientsWRTDoctor(d.email);
             }}
